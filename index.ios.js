@@ -7,47 +7,22 @@
 var React = require('react-native');
 var {
   AppRegistry,
-  StyleSheet,
-  Text,
-  View,
 } = React;
 
-var doubleAuth = React.createClass({
-  render: function() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
-    );
+var Firebase = require('firebase');
+var fb = new Firebase('doubleauth.firebaseio.com');
+
+fb.onAuth(function(auth) {
+  console.log("in onAuth with auth:", auth);
+});
+
+fb.authWithPassword({email: 'double@auth.co', password: 'hello'}, function(err, auth) {
+  if(err) {
+    console.log("authWithPassword error ->", err);
   }
+  //console.log("authWithPassword ->", auth);
 });
 
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+var DoubleAuth = require('./js/DoubleAuth');
 
-AppRegistry.registerComponent('doubleAuth', () => doubleAuth);
+AppRegistry.registerComponent('doubleAuth', () => DoubleAuth);
