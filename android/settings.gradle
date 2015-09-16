@@ -1,0 +1,3 @@
+rootProject.name = 'doubleAuth'
+
+include ':app'
